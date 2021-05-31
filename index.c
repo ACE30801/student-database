@@ -55,8 +55,24 @@ s.Birthday, s.subjects);
  printf("yes\t");
         }
     }
-
     fclose(pfile);
+
+    curr = head;
+    pfile = fopen("data.txt","wb");
+while(curr!=NULL){
+    strcpy(s.name, curr->name);
+    strcpy(s.currentyear, curr->currentyear);
+    s.section = curr->section;
+    s.code = curr->code;
+    s.national_id = curr->national_id;
+    strcpy(s.email, curr->email);
+    strcpy(s.Birthday, curr->Birthday);
+    for(int i=0;i<=10;i++){
+       s.subjects[i] = curr->subjects[i];
+    }
+
+    }
+
     return 0;
 }
 void start(char name[50], char currentyear[15],
