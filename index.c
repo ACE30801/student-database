@@ -1,19 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include<string.h>
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+#include "stdbool.h"
 
- typedef struct list_infostudent{
- char name [50];
- char currentyear[15];
- int section;
- int code;
- long long int national_id;
- char email[30];
- char Birthday[30];
- struct sub *subjects[4];
- int totalmark;
- struct list_infostudent *nextptr;
- }studl;
+struct sub{
+ char name[15];
+ int mark;
+ };
 
  typedef struct infostudent{
  char name [50];
@@ -24,19 +17,43 @@
  char email[30];
  char Birthday[30];
  struct sub *subjects[4];
- int totalmark;
+int totalmark;
+
  }stud;
 
- struct sub{
- char name[15];
- int mark;
- };
-studl *head = NULL;
-studl *curr = NULL;
+
+ typedef struct list_infostudent{
+
+    char name [50];
+    long long int national_id;
+    char currentyear[15];
+    int section;
+    int code;
+    char email[30];
+    char Birthday[30];
+    struct sub *subjects[4];
+    int totalmark;
+
+    struct list_infostudent *nextptr;
+
+ }studl;
+
+ typedef studl *infostptr;
+
+    studl *head = NULL;
+    studl *curr = NULL;
+
+
+void start();
+void mainsearch();
+void searchbyname();
+void searchbycode();
 
 void start();
 void insert();
-
+void mainsearch();
+void searchbycode();
+void searchbyname();
 
 int main()
 {
@@ -224,5 +241,172 @@ void start()
     fclose(pfile1);
 
  }
+ void mainsearch(){
+    int choice;
+    int i;
+    printf("%c",201);
+         for(i=0;i<22;i++)
+printf("%c",205);
+printf("%c",187);
+printf("\n");
+printf("%c",186);
+    printf("1- for search by name %c\n",186);
+
+printf("%c",186);
+    printf("2- for search by code %c\n",186);
+    printf("%c",200);
+    for(i=0;i<22;i++)
+printf("%c",205);
+printf("%c",188);
+printf("\n");
+printf("ENTER YOUR CHOICE:");
+scanf("%d",&choice);
+
+
+if(choice==1){
+    searchbyname();
+}
+ else if(choice==2){
+    searchbycode();
+}
+else{
+    mainsearch();
+}
+
+ }
+void searchbycode(){
+ int code,j,i;
+printf("\n enter code of student:");
+scanf("%d",&code);
+studl*tem;
+tem=head;
+while(tem->code!=code&&tem->nextptr!=NULL){
+
+    tem=tem->nextptr;
+}
+if(tem->code==code){
+
+   //printing
+         printf("%c",201);
+         for(i=0;i<32;i++)
+         printf("%c",205);
+            printf("%c\n",187);
+            printf("%c",186);//
+        printf("result of searching:            ");
+       printf("%c\n",186);
+            printf("%c",186);
+         printf("NAME:%27s",tem->name);
+        printf("%c\n",186);
+           printf("%c",186);
+    printf("CODE:%26d.",tem->code);
+printf("%c\n",186);
+           printf("%c",186);
+  printf("national id %20d",tem->national_id);
+ printf("%c\n",186);//
+  printf("%c",186);//
+    printf("current year%20s",tem->currentyear);
+     printf("%c\n",186);//
+      printf("%c",186);//
+    printf("birthday%24s",tem->Birthday);
+     printf("%c\n",186);//
+      printf("%c",186);//
+       printf("email%27s",tem->email);
+        printf("%c\n",186);//
+ printf("%c",186);//
+          printf("section%25d",tem->section);
+ printf("%c\n",186);//
+          for(j=0;j<4;j++){
+            printf("%c",186);
+            printf("subject: %23s",tem->subjects[j]->name);// maybe
+            printf("%c\n",186);
+            printf("%c",186);
+            printf("student mark: %18d",tem->subjects[j]->mark);
+           printf("%c\n",186);
+            }
+
+
+            printf("%c",200);
+        for(i=0;i<32;i++)
+        printf("%c",205);
+        printf("%c\n",188);
+
+
+
+
+            printf("the code of student incorrect");
+
+
+
+}}
+
+
+
+ void searchbyname(){
+    studl*tem=head;
+    int i=0,j;
+char namesearch[20],inputt[20];
+    printf("Enter the student's name : ");
+   // scanf("\n");scanf("%s",namesearch);//\\scanning
+   scanf("\n%[^\n]",namesearch);
+while( tem!=NULL){//reaching the wanted node
+        if(strcmp(namesearch,tem->name)==0)break;
+    tem=tem->nextptr;
+}
+if(tem==NULL){
+    printf("Student not found\n");
+    return;
+}
+//printing
+         printf("%c",201);
+         for(i=0;i<32;i++)
+         printf("%c",205);
+            printf("%c\n",187);
+            printf("%c",186);//
+        printf("result of searching:            ");
+       printf("%c\n",186);
+            printf("%c",186);
+         printf("NAME:%27s",tem->name);
+        printf("%c\n",186);
+           printf("%c",186);
+    printf("CODE:%26d.",tem->code);
+printf("%c\n",186);
+           printf("%c",186);
+  printf("national id %20d",tem->national_id);
+ printf("%c\n",186);//
+  printf("%c",186);//
+    printf("current year%20s",tem->currentyear);
+     printf("%c\n",186);//
+      printf("%c",186);//
+    printf("birthday%24s",tem->Birthday);
+     printf("%c\n",186);//
+      printf("%c",186);//
+       printf("email%27s",tem->email);
+        printf("%c\n",186);//
+ printf("%c",186);//
+          printf("section%25d",tem->section);
+ printf("%c\n",186);//
+          for(j=0;j<4;j++){
+            printf("%c",186);
+            printf("subject: %23s",tem->subjects[j]->name);// maybe
+            printf("%c\n",186);
+            printf("%c",186);
+            printf("student mark: %18d",tem->subjects[j]->mark);
+           printf("%c\n",186);
+            }
+
+
+            printf("%c",200);
+        for(i=0;i<32;i++)
+        printf("%c",205);
+        printf("%c\n",188);
+
+
+
+
+            printf("the code of student incorrect");
+
+
+
+}
 
 
