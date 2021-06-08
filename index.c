@@ -45,15 +45,12 @@ int totalmark;
 
 
 void start();
+void insert();
 void mainsearch();
 void searchbyname();
 void searchbycode();
 
-void start();
-void insert();
-void mainsearch();
-void searchbycode();
-void searchbyname();
+
 
 int main()
 {
