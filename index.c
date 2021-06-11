@@ -51,16 +51,82 @@ void searchbyname();
 void searchbycode();
 void deletefun();
 void deletefunbycode();
-void displayfun()
+void displayfun();
 
-int main()
-{
+int main(){
+
+stud s;
+studl sl;
+start();
+
+    printf("enter choice ( 1 ->insert , 2->display , 3->stop 4-> search 5-> delete 6-> delete by code) : ");
+    unsigned int choice;
+    scanf("%u", &choice);
+
+    while (choice != 3) {
 
 
-    return;
+     switch (choice) {
+     case 1:
+     insert();
+     displayfun();
+     break;
+
+     case 2:
+        displayfun();
+        break;
+
+    case 4:
+        mainsearch();
+        break;
+    case 5:
+        deletefun();
+        break;
+    case 6:
+        deletefunbycode();
+        break;
+     default :
+        printf("invalid input\n");
+        break;
+     }
+        printf("enter choice ( 1->insert , 2->display , 3->stop  4-> search 5-> delete 6-> delete by code) : ");
+        scanf("%u", &choice);
+     }
+
+
+
+    FILE *fptrW;
+
+   fptrW = fopen("data.txt","wb+");
+
+    infostptr tempW = head;
+    while(tempW != NULL){
+
+        fwrite(&tempW->name,sizeof(tempW->name),1,fptrW);
+        fwrite(&tempW->code,sizeof(tempW->code),1,fptrW);
+        fwrite(&tempW->national_id,sizeof(tempW->national_id),1,fptrW);
+        fwrite(&tempW->Birthday,sizeof(tempW->Birthday),1,fptrW);
+        fwrite(&tempW->email,sizeof(tempW->email),1,fptrW);
+        fwrite(&tempW->currentyear,sizeof(tempW->currentyear),1,fptrW);
+        fwrite(&tempW->section,sizeof(tempW->section),1,fptrW);
+
+        fwrite(&tempW->subjects[0]->name,sizeof(tempW->subjects[0]->name),1,fptrW);
+        fwrite(&tempW->subjects[0]->mark,sizeof(tempW->subjects[0]->mark),1,fptrW);
+        fwrite(&tempW->subjects[1]->name,sizeof(tempW->subjects[1]->name),1,fptrW);
+        fwrite(&tempW->subjects[1]->mark,sizeof(tempW->subjects[1]->mark),1,fptrW);
+        fwrite(&tempW->subjects[2]->name,sizeof(tempW->subjects[2]->name),1,fptrW);
+        fwrite(&tempW->subjects[2]->mark,sizeof(tempW->subjects[2]->mark),1,fptrW);
+        fwrite(&tempW->subjects[3]->name,sizeof(tempW->subjects[3]->name),1,fptrW);
+        fwrite(&tempW->subjects[3]->mark,sizeof(tempW->subjects[3]->mark),1,fptrW);
+
+        tempW=tempW->nextptr;
+    }
+
+    fclose(fptrW);
+
+
+    return 0;
 }
-
-
 
 
 void insert()
