@@ -49,8 +49,9 @@ void insert();
 void mainsearch();
 void searchbyname();
 void searchbycode();
-
-
+void deletefun();
+void deletefunbycode();
+void displayfun()
 
 int main()
 {
@@ -407,3 +408,132 @@ printf("%c\n",186);
 }
 
 
+void deletefun()
+{
+
+    char delname[20];
+
+    printf("Enter student name to delete\n");
+
+    scanf("\n%[^\n]", delname);
+     printf("%s\n",delname);
+ studl *cur=head;
+ studl *pre=NULL;
+while(cur !=NULL)
+{
+    if(strcmp(cur->name,delname)==0)
+        {
+        if(cur==head)
+            {
+            head=cur->nextptr;
+            free(cur);
+            printf("Done\n");
+        }
+        else{
+            pre->nextptr=cur->nextptr;
+            free(cur);
+            printf("Done\n");
+        }
+    }
+    else{
+        pre=cur;
+        cur=cur->nextptr;
+    }
+}
+    }
+
+void deletefunbycode()
+{
+    int studcode;
+    printf("Enter student code to delete\n");
+    scanf("%d",&studcode);
+ studl *cur=head;
+ studl *pre=NULL;
+while(cur !=NULL)
+{
+    if(cur->code==studcode)
+        {
+        if(cur==head)
+            {
+            head=cur->nextptr;
+            free(cur);
+            printf("Doneee\n");
+            return;
+        }
+        else{
+            pre->nextptr=cur->nextptr;
+            free(cur);
+            printf("Done\n");
+            return;
+        }
+    }
+    else{
+        pre=cur;
+        cur=cur->nextptr;
+    }
+}
+printf("%s\n", "code doesn't exist");
+    }
+void displayfun()//display all nodes
+{
+    int i,j;
+studl *cur=head;
+while(cur != NULL){
+
+
+//printing
+         printf("%c",201);
+         for(i=0;i<32;i++)
+         printf("%c",205);
+            printf("%c\n",187);
+            printf("%c",186);//
+        printf("result of searching:            ");
+       printf("%c\n",186);
+            printf("%c",186);
+         printf("NAME:%27s",cur->name);
+        printf("%c\n",186);
+           printf("%c",186);
+    printf("CODE:%26d.",cur->code);
+printf("%c\n",186);
+           printf("%c",186);
+  printf("national id %20d",cur->national_id);
+ printf("%c\n",186);//
+  printf("%c",186);//
+    printf("current year%20s",cur->currentyear);
+     printf("%c\n",186);//
+      printf("%c",186);//
+    printf("birthday%24s",cur->Birthday);
+     printf("%c\n",186);//
+      printf("%c",186);//
+       printf("email%27s",cur->email);
+        printf("%c\n",186);//
+ printf("%c",186);//
+          printf("section%25d",cur->section);
+ printf("%c\n",186);//
+          for(j=0;j<4;j++){
+            printf("%c",186);
+            printf("subject: %23s",cur->subjects[j]->name);// maybe
+            printf("%c\n",186);
+            printf("%c",186);
+            printf("student mark: %18d",cur->subjects[j]->mark);
+           printf("%c\n",186);
+            }
+
+
+            printf("%c",200);
+        for(i=0;i<32;i++)
+        printf("%c",205);
+        printf("%c\n",188);
+
+
+
+
+
+
+
+cur=cur->nextptr;
+}
+
+
+return;
+}
