@@ -52,6 +52,7 @@ void searchbycode();
 void deletefun();
 void deletefunbycode();
 void displayfun();
+void edit();
 
 int main(){
 
@@ -59,7 +60,7 @@ stud s;
 studl sl;
 start();
 
-    printf("enter choice ( 1 ->insert , 2->display , 3->stop 4-> search 5-> delete 6-> delete by code) : ");
+    printf("enter choice ( 1 ->insert , 2->display , 3->stop 4-> search 5-> delete 6-> delete by code 7-> edit subject mark by its number) : ");
     unsigned int choice;
     scanf("%u", &choice);
 
@@ -84,6 +85,9 @@ start();
         break;
     case 6:
         deletefunbycode();
+        break;
+    case 7:
+        edit();
         break;
      default :
         printf("invalid input\n");
@@ -602,4 +606,34 @@ cur=cur->nextptr;
 
 
 return;
+}
+
+
+void edit(){
+ int code,numofsub,newmark;
+printf("\n enter code of student:");
+scanf("%d",&code);
+studl *tem;
+tem=head;
+while( tem->code !=code && tem->nextptr!=NULL ){
+
+    tem=tem->nextptr;
+}
+if(tem->code==code){
+
+do{
+    printf("\nEnter number of subject that you want to change its mark\n");
+    printf(" 1 )for  %s \n 2 )for  %s \n 3 )for  %s \n 4 )for  %s \n ",tem->subjects[0]->name, tem->subjects[1]->name , tem->subjects[2]->name , tem->subjects[3]->name);
+
+    scanf("%d",&numofsub);
+}while(numofsub>4 || numofsub<0);
+
+    printf("enter the new mark");
+    scanf("%d",&newmark);
+    tem->subjects[numofsub-1]->mark=newmark;
+
+}else{
+    printf("\nNo student has this code\n");
+}
+
 }
