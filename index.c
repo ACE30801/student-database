@@ -57,6 +57,8 @@ void searchbycode();
 void deletefun();
 void deletefunbycode();
 void displayfun();
+void edit();
+void top_ten_students();
 
 void main(){
 int vs, p=1;
@@ -69,10 +71,10 @@ HANDLE curs = GetStdHandle ( STD_OUTPUT_HANDLE );
 unsigned int choice;
 do{
 vs=4;
-printbox(vs,17, 6);
-gotoxy(0,vs+9);
+printbox(vs,17, 8);
+gotoxy(0,vs+11);
 for(size_t y=0; y<=(leng()+1)*18;y++){
-printf("                                                                                          \n");
+printf("                                                                                                                        ");
 }
 do{
 vs=4;
@@ -90,7 +92,11 @@ SetConsoleTextAttribute ( curs, 15 );
      gotoxy(21, vs++);
      printf("5->delete by name");
      gotoxy(21, vs++);
-     printf("6->stop          ");
+     printf("6->top students  ");
+     gotoxy(21, vs++);
+     printf("7->edit          ");
+     gotoxy(21, vs++);
+     printf("8->stop          ");
 
 vs=5;
     switch (p){
@@ -127,21 +133,32 @@ vs=5;
         SetConsoleTextAttribute ( curs, 240 );
         vs+=5;
         gotoxy(21, vs);
-        printf("6->stop          ");
+        printf("6->top students  ");
+        //top_ten_students();
         break;
-     default :
-        printf("invalid input\n");
+    case 7:
+        SetConsoleTextAttribute ( curs, 240 );
+        vs+=6;
+        gotoxy(21, vs);
+        printf("7->edit          ");
+        //edit();
+        break;
+    case 8:
+        SetConsoleTextAttribute ( curs, 240 );
+        vs+=7;
+        gotoxy(21, vs);
+        printf("8->stop          ");
         break;
      }
     c=getch();
     if(c==32)c=getch();
     if(c==72) {
         p--;
-        if(p==0)p=6;
+        if(p==0)p=8;
     }
     if(c==80){
         p++;
-        if(p==7)p=1;
+        if(p==9)p=1;
     }
 
 
@@ -149,7 +166,7 @@ vs=5;
 
 SetConsoleTextAttribute ( curs, 15 );
 vs=5;
-vs+=8;
+vs+=10;
 gotoxy(17,vs);
 switch(p){
     case 1:
@@ -179,6 +196,16 @@ switch(p){
         deletefunbycode();
         break;
     case 6:
+        printf("you selected %d -> top students: ", p);
+        gotoxy(0,vs+1);
+        top_ten_students();
+        break;
+    case 7:
+        printf("you selected %d -> edit student data: ", p);
+        gotoxy(0,vs+1);
+        edit();
+        break;
+    case 8:
         gotoxy(17,vs);
         printf("                                                 ");
         gotoxy(0,vs);
@@ -218,7 +245,7 @@ switch(p){
 
 printf("******press any key to continue******\n\n\n");
 c=getch();
-}while(p!=6);
+}while(p!=8);
 
 
     return;
@@ -234,6 +261,8 @@ void insert()
     newPtr->subjects[1] =  malloc(sizeof(struct sub));
     newPtr->subjects[2] =  malloc(sizeof(struct sub));
     newPtr->subjects[3] =  malloc(sizeof(struct sub));
+
+    int subCounter=0;
 
     if (newPtr != NULL) {
 
@@ -264,33 +293,17 @@ void insert()
     fflush(stdin);
     scanf("%d",&newPtr->section);
 
-    printf("Enter [name] of the subject No.1 :");
-    fflush(stdin);
-    gets(newPtr->subjects[0]->name);
-    printf("Enter [degree] of the subject No.1 :");
-    fflush(stdin);
-    scanf("%d",&newPtr->subjects[0]->mark);
+    while(subCounter<4){
 
-    printf("Enter [name] of the subject No.2 :");
-    fflush(stdin);
-    gets(newPtr->subjects[1]->name);
-    printf("Enter [degree] of the subject No.2 :");
-    fflush(stdin);
-    scanf("%d",&newPtr->subjects[1]->mark);
+        printf("Enter [name] of the subject No.%d :",subCounter+1);
+        fflush(stdin);
+        gets(newPtr->subjects[subCounter]->name);
+        printf("Enter [mark] of the subject No.%d :",subCounter+1);
+        fflush(stdin);
+        scanf("%d",&newPtr->subjects[subCounter]->mark);
 
-    printf("Enter [name] of the subject No.3 :");
-    fflush(stdin);
-    gets(newPtr->subjects[2]->name);
-    printf("Enter [degree] of the subject No.3 :");
-    fflush(stdin);
-    scanf("%d",&newPtr->subjects[2]->mark);
-
-    printf("Enter [name] of the subject No.4 :");
-    fflush(stdin);
-    gets(newPtr->subjects[3]->name);
-    printf("Enter [degree] of the subject No.4 :");
-    fflush(stdin);
-    scanf("%d",&newPtr->subjects[3]->mark);
+        subCounter++;
+    }
 
     newPtr->nextptr = NULL;
 
@@ -300,34 +313,28 @@ void insert()
     studl *currentPtr = head;
 
 
-    int record ,fname ,lname,space1 ,space2;
-    bool bigger ,lower;
+    int fname ,lname;
+    bool bigger ,less;
 
+    while(currentPtr != NULL){
 
-    for(record=0; currentPtr != NULL ;record++){
-            bigger=false ,lower=false;
-        for(fname=0; fname<3; fname++){
-            if(newPtr->name[fname] < currentPtr->name[fname]){
-                    lower=true; break;  }
-            else if(newPtr->name[fname] == currentPtr->name[fname]) {continue;}
-            else{ bigger=true ; break;}
+            bigger=false ,less=false;
+            fname=0 , lname=0;
+
+        while( newPtr->name[fname]!='\0' && currentPtr->name[lname]!='\0' ){
+            for(fname, lname; newPtr->name[fname]!=' ' && currentPtr->name[lname]!=' ' ; fname++, lname++){
+                if(newPtr->name[fname] < currentPtr->name[lname]){
+                        less=true; break;  }
+                else if(newPtr->name[fname] == currentPtr->name[lname]) {continue;}
+                else{ bigger=true ; break;}
+            }
+            if(less){break;}
+            if(bigger){break;}
+
+            fname++;
+            lname++;
         }
-
-                if(lower){ break;}
-                if(bigger){
-                previousPtr = currentPtr;
-                currentPtr = currentPtr->nextptr;
-                    continue;}
-
-        for(space1=1; newPtr->name[space1]!=' ' ; space1++){}
-        for(space2=1; currentPtr->name[space2]!=' ' ; space2++){}
-
-        for(lname=0; lname<3; lname++, space1++,space2++){
-            if(newPtr->name[space1] < currentPtr->name[space2]){ lower=true; break;}
-            else if(newPtr->name[space1] == currentPtr->name[space2]) {continue;}
-            else{  break;}
-        }
-                if(lower){break;}
+                if(less){break;}
 
                 previousPtr = currentPtr;
                 currentPtr = currentPtr->nextptr;
@@ -346,10 +353,6 @@ void insert()
  printf(" No memory available.\n" );
  }
  }
-
-
-
-
 
 void start()
 {
@@ -370,10 +373,10 @@ void start()
         studl *temp = malloc(sizeof(studl));
         if( fread(&temp->name,sizeof(temp->name),1,pfile1)  == 0 ) {  break;}
 
+        temp->subjects[3] =  malloc(sizeof(struct sub));
         temp->subjects[0] =  malloc(sizeof(struct sub));
         temp->subjects[1] =  malloc(sizeof(struct sub));
         temp->subjects[2] =  malloc(sizeof(struct sub));
-        temp->subjects[3] =  malloc(sizeof(struct sub));
 
         fread(&temp->code,sizeof(temp->code),1,pfile1);
         fread(&temp->national_id,sizeof(temp->national_id),1,pfile1);
@@ -400,7 +403,13 @@ void start()
     cur->nextptr = NULL ;
     fclose(pfile1);
 
+
  }
+
+
+
+
+
  void mainsearch(){
     int choice;
     int i;
@@ -750,4 +759,102 @@ int leng() {
    }
 
    return num;
+}
+
+void edit(){
+ int code,numofsub,newmark;
+printf("\n enter code of student:");
+scanf("%d",&code);
+studl *tem;
+tem=head;
+while( tem->code !=code && tem->nextptr!=NULL ){
+
+    tem=tem->nextptr;
+}
+if(tem->code==code){
+
+do{
+    printf("\nEnter number of subject that you want to change its mark\n");
+    printf(" 1 )for  %s \n 2 )for  %s \n 3 )for  %s \n 4 )for  %s \n ",tem->subjects[0]->name, tem->subjects[1]->name , tem->subjects[2]->name , tem->subjects[3]->name);
+
+    scanf("%d",&numofsub);
+}while(numofsub>4 || numofsub<0);
+
+    printf("enter the new mark");
+    scanf("%d",&newmark);
+    tem->subjects[numofsub-1]->mark=newmark;
+
+}else{
+    printf("\nNo student has this code\n");
+}
+
+}
+
+
+
+void top_ten_students(){
+
+
+if(head != NULL){
+    int max,i,j,sum=0;
+    int max_ten[10] = {0};
+
+    studl *temp=head;
+
+    while( temp!=NULL ){
+        for(i=0 ;i<4; i++){
+            sum+= temp->subjects[i]->mark;
+        }
+        temp->totalmark = sum;
+        sum=0;
+        temp = temp->nextptr;
+    }
+
+    temp=head;
+    max = head->totalmark;
+
+    while(  temp!=NULL ){
+        if(temp->totalmark > max){ max = temp->totalmark; }
+         temp = temp->nextptr;
+    }
+
+    max_ten[0]=max;
+    max=-1;
+
+    temp=head;
+
+    for(i=1; i<10; i++){
+        while( temp!= NULL){
+            if(temp->totalmark > max && temp->totalmark < max_ten[i-1] ){
+                    max = temp->totalmark;
+            }
+            temp = temp->nextptr;
+        }
+        max_ten[i] = max;
+        max=-1;
+        temp=head;
+    }
+
+
+    int num=1;
+    temp = head;
+
+    i=0;
+    while( max_ten[i]!=-1 && i<10 ){
+        while( temp != NULL){
+
+            if(temp->totalmark == max_ten[i]){
+                printf("\t[%d] %s with [%d] degrees\n",num, temp->name ,temp->totalmark);
+                i++;
+                num++;
+                break; }
+
+            temp = temp->nextptr;
+        }
+        temp = head;
+    }
+}else{
+    printf("There are no students\n");
+}
+
 }
