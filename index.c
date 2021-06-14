@@ -53,6 +53,7 @@ void deletefun();
 void deletefunbycode();
 void displayfun();
 void edit();
+void top_ten_students();
 
 int main(){
 
@@ -60,7 +61,7 @@ stud s;
 studl sl;
 start();
 
-    printf("enter choice ( 1 ->insert , 2->display , 3->stop 4-> search 5-> delete 6-> delete by code 7-> edit subject mark by its number) : ");
+    printf("enter choice ( 1 ->insert , 2->display , 3->stop 4-> search 5-> delete 6-> delete by code 7-> edit subject mark by its number 8-> Top ten students) : ");
     unsigned int choice;
     scanf("%u", &choice);
 
@@ -88,6 +89,9 @@ start();
         break;
     case 7:
         edit();
+        break;
+    case 8:
+        top_ten_students();
         break;
      default :
         printf("invalid input\n");
@@ -616,6 +620,75 @@ do{
 
 }else{
     printf("\nNo student has this code\n");
+}
+
+}
+
+
+
+void top_ten_students(){
+
+
+if(head != NULL){
+    int max,i,j,sum=0;
+    int max_ten[10] = {0};
+
+    studl *temp=head;
+
+    while( temp!=NULL ){
+        for(i=0 ;i<4; i++){
+            sum+= temp->subjects[i]->mark;
+        }
+        temp->totalmark = sum;
+        sum=0;
+        temp = temp->nextptr;
+    }
+
+    temp=head;
+    max = head->totalmark;
+
+    while(  temp!=NULL ){
+        if(temp->totalmark > max){ max = temp->totalmark; }
+         temp = temp->nextptr;
+    }
+
+    max_ten[0]=max;
+    max=-1;
+
+    temp=head;
+
+    for(i=1; i<10; i++){
+        while( temp!= NULL){
+            if(temp->totalmark > max && temp->totalmark < max_ten[i-1] ){
+                    max = temp->totalmark;
+            }
+            temp = temp->nextptr;
+        }
+        max_ten[i] = max;
+        max=-1;
+        temp=head;
+    }
+
+
+    int num=1;
+    temp = head;
+
+    i=0;
+    while( max_ten[i]!=-1 && i<10 ){
+        while( temp != NULL){
+
+            if(temp->totalmark == max_ten[i]){
+                printf("\t[%d] %s with [%d] degrees\n",num, temp->name ,temp->totalmark);
+                i++;
+                num++;
+                break; }
+
+            temp = temp->nextptr;
+        }
+        temp = head;
+    }
+}else{
+    printf("There are no students\n");
 }
 
 }
