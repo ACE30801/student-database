@@ -2,6 +2,7 @@
 #include "stdlib.h"
 #include "string.h"
 #include "stdbool.h"
+#include "windows.h"
 
 struct sub{
  char name[15];
@@ -43,6 +44,10 @@ int totalmark;
     studl *head = NULL;
     studl *curr = NULL;
 
+void gotoxy(int x,int y);
+void hidecursor();
+void printbox(int s,int w, int h);
+int leng();
 
 void start();
 void insert();
@@ -53,47 +58,131 @@ void deletefun();
 void deletefunbycode();
 void displayfun();
 
-int main(){
-
+void main(){
+int vs, p=1;
+char c;
 stud s;
 studl sl;
 start();
+hidecursor();
+HANDLE curs = GetStdHandle ( STD_OUTPUT_HANDLE );
+unsigned int choice;
+do{
+vs=4;
+printbox(vs,17, 6);
+gotoxy(0,vs+9);
+for(size_t y=0; y<=(leng()+1)*18;y++){
+printf("                                                                                          \n");
+}
+do{
+vs=4;
+SetConsoleTextAttribute ( curs, 15 );
+     gotoxy(21,vs++);
+     printf("enter choice:");
+     gotoxy(21, vs++);
+     printf("1->insert        ");
+     gotoxy(21, vs++);
+     printf("2->display       ");
+     gotoxy(21, vs++);
+     printf("3->search        ");
+     gotoxy(21, vs++);
+     printf("4->delete by code");
+     gotoxy(21, vs++);
+     printf("5->delete by name");
+     gotoxy(21, vs++);
+     printf("6->stop          ");
 
-    printf("enter choice ( 1 ->insert , 2->display , 3->stop 4-> search 5-> delete 6-> delete by code) : ");
-    unsigned int choice;
-    scanf("%u", &choice);
-
-    while (choice != 3) {
-
-
-     switch (choice) {
+vs=5;
+    switch (p){
      case 1:
-     insert();
-     displayfun();
+        SetConsoleTextAttribute ( curs, 240 );
+        gotoxy(21, vs);
+        printf("1->insert        ");
      break;
-
      case 2:
-        displayfun();
+        SetConsoleTextAttribute ( curs, 240 );
+        vs+=1;
+        gotoxy(21, vs);
+        printf("2->display       ");
         break;
-
+    case 3:
+        SetConsoleTextAttribute ( curs, 240 );
+        vs+=2;
+        gotoxy(21, vs);
+        printf("3->search        ");
+        break;
     case 4:
-        mainsearch();
+        SetConsoleTextAttribute ( curs, 240 );
+        vs+=3;
+        gotoxy(21, vs);
+        printf("4->delete by code");
         break;
     case 5:
-        deletefun();
+        SetConsoleTextAttribute ( curs, 240 );
+        vs+=4;
+        gotoxy(21, vs);
+        printf("5->delete by name");
         break;
-    case 6:
-        deletefunbycode();
+     case 6:
+        SetConsoleTextAttribute ( curs, 240 );
+        vs+=5;
+        gotoxy(21, vs);
+        printf("6->stop          ");
         break;
      default :
         printf("invalid input\n");
         break;
      }
-        printf("enter choice ( 1->insert , 2->display , 3->stop  4-> search 5-> delete 6-> delete by code) : ");
-        scanf("%u", &choice);
-     }
+    c=getch();
+    if(c==32)c=getch();
+    if(c==72) {
+        p--;
+        if(p==0)p=6;
+    }
+    if(c==80){
+        p++;
+        if(p==7)p=1;
+    }
 
 
+}while (c!=13);
+
+SetConsoleTextAttribute ( curs, 15 );
+vs=5;
+vs+=8;
+gotoxy(17,vs);
+switch(p){
+    case 1:
+        printf("you selected %d -> insert: ", p);
+        gotoxy(0,vs+1);
+        insert();
+     displayfun();
+        break;
+    case 2:
+        printf("you selected %d -> display: ", p);
+        gotoxy(0,vs+1);
+        displayfun();
+        break;
+    case 3:
+        printf("you selected %d -> search: ", p);
+        gotoxy(0,vs+1);
+        mainsearch();
+        break;
+    case 4:
+        printf("you selected %d -> delete by code: ", p);
+        gotoxy(0,vs+1);
+        deletefun();
+        break;
+    case 5:
+        printf("you selected %d -> delete by name: ", p);
+        gotoxy(0,vs+1);
+        deletefunbycode();
+        break;
+    case 6:
+        gotoxy(17,vs);
+        printf("                                                 ");
+        gotoxy(0,vs);
+        printf("program ending....\n");
 
     FILE *fptrW;
 
@@ -124,8 +213,15 @@ start();
 
     fclose(fptrW);
 
+        return;
+}
 
-    return 0;
+printf("******press any key to continue******\n\n\n");
+c=getch();
+}while(p!=6);
+
+
+    return;
 }
 
 
@@ -338,6 +434,7 @@ else{
 }
 
  }
+
 void searchbycode(){
  int code,j,i;
 printf("\n enter code of student:");
@@ -362,7 +459,7 @@ if(tem->code==code){
          printf("NAME:%27s",tem->name);
         printf("%c\n",186);
            printf("%c",186);
-    printf("CODE:%26d.",tem->code);
+    printf("CODE:%27d",tem->code);
 printf("%c\n",186);
            printf("%c",186);
   printf("national id %20d",tem->national_id);
@@ -393,15 +490,16 @@ printf("%c\n",186);
         for(i=0;i<32;i++)
         printf("%c",205);
         printf("%c\n",188);
+}
 
 
 
+else
+    printf("the code of student incorrect\n\n");
 
-            printf("the code of student incorrect");
 
 
-
-}}
+}
 
 
 
@@ -432,7 +530,7 @@ if(tem==NULL){
          printf("NAME:%27s",tem->name);
         printf("%c\n",186);
            printf("%c",186);
-    printf("CODE:%26d.",tem->code);
+    printf("CODE:%27d",tem->code);
 printf("%c\n",186);
            printf("%c",186);
   printf("national id %20d",tem->national_id);
@@ -466,8 +564,6 @@ printf("%c\n",186);
 
 
 
-
-            printf("the code of student incorrect");
 
 
 
@@ -546,20 +642,18 @@ void displayfun()//display all nodes
 studl *cur=head;
 while(cur != NULL){
 
-
-//printing
          printf("%c",201);
          for(i=0;i<32;i++)
          printf("%c",205);
             printf("%c\n",187);
             printf("%c",186);//
-        printf("result of searching:            ");
+        printf("display all:                    ");
        printf("%c\n",186);
             printf("%c",186);
          printf("NAME:%27s",cur->name);
         printf("%c\n",186);
            printf("%c",186);
-    printf("CODE:%26d.",cur->code);
+    printf("CODE:%27d",cur->code);
 printf("%c\n",186);
            printf("%c",186);
   printf("national id %20d",cur->national_id);
@@ -602,4 +696,58 @@ cur=cur->nextptr;
 
 
 return;
+}
+
+
+void gotoxy(int x,int y)
+{
+    COORD coord= {0,0};
+    coord.X=x;
+    coord.Y=y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
+}
+
+void printbox(int s,int w, int h){
+    int i=0;
+    gotoxy(20,s);
+    printf("%c",201);
+    for(i=0;i<w;i++)
+            printf("%c",205);
+    printf("%c",187);
+for(i=1;i<=h;i++){
+    gotoxy(20,s+i);
+        printf("%c",186);
+   for(int j=0; j<w;j++)printf(" ");
+        printf("%c",186);
+}
+
+    gotoxy(20,s+i);
+    printf("%c",200);
+    for(i=0;i<w;i++)
+        printf("%c",205);
+    printf("%c\n",188);
+
+
+    printf("\n\n");
+return;
+}
+
+void hidecursor()
+{
+   HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+   CONSOLE_CURSOR_INFO info;
+   info.dwSize = 100;
+   info.bVisible = FALSE;
+   SetConsoleCursorInfo(consoleHandle, &info);
+}
+
+int leng() {
+   int num = 0;
+   studl *count;
+
+   for(count = head; count != NULL; count = count->nextptr) {
+      num++;
+   }
+
+   return num;
 }
