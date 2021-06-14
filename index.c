@@ -263,6 +263,9 @@ void insert()
     newPtr->subjects[3] =  malloc(sizeof(struct sub));
 
     int subCounter=0;
+    bool IsCorrect = false;
+
+    studl *temp;
 
     if (newPtr != NULL) {
 
@@ -275,9 +278,36 @@ void insert()
     fflush(stdin);
     scanf("%d",&newPtr->code);
 
+    while(head != NULL){
+        temp = head;
+        while( temp->code != newPtr->code ){
+            if(temp->nextptr == NULL){  IsCorrect = true; break; }
+            temp = temp->nextptr;
+        }
+        if(IsCorrect){break;}
+        printf("Please, enter correct code : ");
+        fflush(stdin);
+        scanf("%d",&newPtr->code);
+    }
+    IsCorrect = false;
+
     printf("Enter the student's ID :");
     fflush(stdin);
     scanf("%lli",&newPtr->national_id);
+
+    while(head != NULL){
+        temp = head;
+        while( temp->national_id != newPtr->national_id ){
+            if(temp->nextptr == NULL){  IsCorrect = true; break; }
+            temp = temp->nextptr;
+        }
+        if(IsCorrect){break;}
+        printf("Please, enter correct ID : ");
+        fflush(stdin);
+        scanf("%lli",&newPtr->national_id);
+    }
+
+
     printf("Enter the student's date of birth :");
     fflush(stdin);
     gets(newPtr->Birthday);
