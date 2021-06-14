@@ -143,6 +143,8 @@ void insert()
     newPtr->subjects[2] =  malloc(sizeof(struct sub));
     newPtr->subjects[3] =  malloc(sizeof(struct sub));
 
+    int subCounter=0;
+
     if (newPtr != NULL) {
 
 //adding all data for a new student
@@ -172,33 +174,17 @@ void insert()
     fflush(stdin);
     scanf("%d",&newPtr->section);
 
-    printf("Enter [name] of the subject No.1 :");
-    fflush(stdin);
-    gets(newPtr->subjects[0]->name);
-    printf("Enter [degree] of the subject No.1 :");
-    fflush(stdin);
-    scanf("%d",&newPtr->subjects[0]->mark);
+    while(subCounter<4){
 
-    printf("Enter [name] of the subject No.2 :");
-    fflush(stdin);
-    gets(newPtr->subjects[1]->name);
-    printf("Enter [degree] of the subject No.2 :");
-    fflush(stdin);
-    scanf("%d",&newPtr->subjects[1]->mark);
+        printf("Enter [name] of the subject No.%d :",subCounter+1);
+        fflush(stdin);
+        gets(newPtr->subjects[subCounter]->name);
+        printf("Enter [mark] of the subject No.%d :",subCounter+1);
+        fflush(stdin);
+        scanf("%d",&newPtr->subjects[subCounter]->mark);
 
-    printf("Enter [name] of the subject No.3 :");
-    fflush(stdin);
-    gets(newPtr->subjects[2]->name);
-    printf("Enter [degree] of the subject No.3 :");
-    fflush(stdin);
-    scanf("%d",&newPtr->subjects[2]->mark);
-
-    printf("Enter [name] of the subject No.4 :");
-    fflush(stdin);
-    gets(newPtr->subjects[3]->name);
-    printf("Enter [degree] of the subject No.4 :");
-    fflush(stdin);
-    scanf("%d",&newPtr->subjects[3]->mark);
+        subCounter++;
+    }
 
     newPtr->nextptr = NULL;
 
@@ -208,34 +194,28 @@ void insert()
     studl *currentPtr = head;
 
 
-    int record ,fname ,lname,space1 ,space2;
-    bool bigger ,lower;
+    int fname ,lname;
+    bool bigger ,less;
 
+    while(currentPtr != NULL){
 
-    for(record=0; currentPtr != NULL ;record++){
-            bigger=false ,lower=false;
-        for(fname=0; fname<3; fname++){
-            if(newPtr->name[fname] < currentPtr->name[fname]){
-                    lower=true; break;  }
-            else if(newPtr->name[fname] == currentPtr->name[fname]) {continue;}
-            else{ bigger=true ; break;}
+            bigger=false ,less=false;
+            fname=0 , lname=0;
+
+        while( newPtr->name[fname]!='\0' && currentPtr->name[lname]!='\0' ){
+            for(fname, lname; newPtr->name[fname]!=' ' && currentPtr->name[lname]!=' ' ; fname++, lname++){
+                if(newPtr->name[fname] < currentPtr->name[lname]){
+                        less=true; break;  }
+                else if(newPtr->name[fname] == currentPtr->name[lname]) {continue;}
+                else{ bigger=true ; break;}
+            }
+            if(less){break;}
+            if(bigger){break;}
+
+            fname++;
+            lname++;
         }
-
-                if(lower){ break;}
-                if(bigger){
-                previousPtr = currentPtr;
-                currentPtr = currentPtr->nextptr;
-                    continue;}
-
-        for(space1=1; newPtr->name[space1]!=' ' ; space1++){}
-        for(space2=1; currentPtr->name[space2]!=' ' ; space2++){}
-
-        for(lname=0; lname<3; lname++, space1++,space2++){
-            if(newPtr->name[space1] < currentPtr->name[space2]){ lower=true; break;}
-            else if(newPtr->name[space1] == currentPtr->name[space2]) {continue;}
-            else{  break;}
-        }
-                if(lower){break;}
+                if(less){break;}
 
                 previousPtr = currentPtr;
                 currentPtr = currentPtr->nextptr;
@@ -254,10 +234,6 @@ void insert()
  printf(" No memory available.\n" );
  }
  }
-
-
-
-
 
 void start()
 {
@@ -278,10 +254,10 @@ void start()
         studl *temp = malloc(sizeof(studl));
         if( fread(&temp->name,sizeof(temp->name),1,pfile1)  == 0 ) {  break;}
 
+        temp->subjects[3] =  malloc(sizeof(struct sub));
         temp->subjects[0] =  malloc(sizeof(struct sub));
         temp->subjects[1] =  malloc(sizeof(struct sub));
         temp->subjects[2] =  malloc(sizeof(struct sub));
-        temp->subjects[3] =  malloc(sizeof(struct sub));
 
         fread(&temp->code,sizeof(temp->code),1,pfile1);
         fread(&temp->national_id,sizeof(temp->national_id),1,pfile1);
@@ -308,7 +284,13 @@ void start()
     cur->nextptr = NULL ;
     fclose(pfile1);
 
+
  }
+
+
+
+
+
  void mainsearch(){
     int choice;
     int i;
