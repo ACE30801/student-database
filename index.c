@@ -13,7 +13,6 @@ typedef struct list_infostudent{
 
     char name [50];
     long long int national_id;
-    char currentyear[15];
     int section;
     int code;
     char email[30];
@@ -206,7 +205,6 @@ switch(p){
         fwrite(&tempW->national_id,sizeof(tempW->national_id),1,fptrW);
         fwrite(&tempW->Birthday,sizeof(tempW->Birthday),1,fptrW);
         fwrite(&tempW->email,sizeof(tempW->email),1,fptrW);
-        fwrite(&tempW->currentyear,sizeof(tempW->currentyear),1,fptrW);
         fwrite(&tempW->section,sizeof(tempW->section),1,fptrW);
 
         fwrite(&tempW->subjects[0]->name,sizeof(tempW->subjects[0]->name),1,fptrW);
@@ -299,9 +297,7 @@ void insert()
     fflush(stdin);
     gets(newPtr->email);
 
-    printf("Enter the student's current year :");
-    fflush(stdin);
-    gets(newPtr->currentyear);
+
     printf("Enter the student's section :");
     fflush(stdin);
     scanf("%d",&newPtr->section);
@@ -395,7 +391,6 @@ void start()
         fread(&temp->national_id,sizeof(temp->national_id),1,pfile1);
         fread(&temp->Birthday,sizeof(temp->Birthday),1,pfile1);
         fread(&temp->email,sizeof(temp->email),1,pfile1);
-        fread(&temp->currentyear,sizeof(temp->currentyear),1,pfile1);
         fread(&temp->section,sizeof(temp->section),1,pfile1);
 
         fread(&temp->subjects[0]->name,sizeof(temp->subjects[0]->name),1,pfile1);
@@ -486,9 +481,6 @@ printf("%c\n",186);
            printf("%c",186);
   printf("national id %20d",tem->national_id);
  printf("%c\n",186);//
-  printf("%c",186);//
-    printf("current year%20s",tem->currentyear);
-     printf("%c\n",186);//
       printf("%c",186);//
     printf("birthday%24s",tem->Birthday);
      printf("%c\n",186);//
@@ -557,9 +549,6 @@ printf("%c\n",186);
            printf("%c",186);
   printf("national id %20d",tem->national_id);
  printf("%c\n",186);//
-  printf("%c",186);//
-    printf("current year%20s",tem->currentyear);
-     printf("%c\n",186);//
       printf("%c",186);//
     printf("birthday%24s",tem->Birthday);
      printf("%c\n",186);//
@@ -680,9 +669,6 @@ printf("%c\n",186);
            printf("%c",186);
   printf("national id %20d",cur->national_id);
  printf("%c\n",186);//
-  printf("%c",186);//
-    printf("current year%20s",cur->currentyear);
-     printf("%c\n",186);//
       printf("%c",186);//
     printf("birthday%24s",cur->Birthday);
      printf("%c\n",186);//
