@@ -522,7 +522,7 @@ else
     int i=0,j;
 char namesearch[20],inputt[20];
     printf("Enter the student's name : ");
-   // scanf("\n");scanf("%s",namesearch);//\\scanning
+
    scanf("\n%[^\n]",namesearch);
 while( tem!=NULL){//reaching the wanted node
         if(strcmp(namesearch,tem->name)==0)break;
@@ -601,11 +601,13 @@ while(cur !=NULL)
             head=cur->nextptr;
             free(cur);
             printf("Done\n");
+            return;
         }
         else{
             pre->nextptr=cur->nextptr;
             free(cur);
             printf("Done\n");
+            return;
         }
     }
     else{
@@ -613,6 +615,7 @@ while(cur !=NULL)
         cur=cur->nextptr;
     }
 }
+printf("student isn't exist");
     }
 
 void deletefunbycode()
