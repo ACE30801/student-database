@@ -188,12 +188,12 @@ switch(p){
     case 4:
         printf("you selected %d -> delete by code: ", p);
         gotoxy(0,vs+1);
-        deletefun();
+        deletefunbycode();
         break;
     case 5:
         printf("you selected %d -> delete by name: ", p);
         gotoxy(0,vs+1);
-        deletefunbycode();
+        deletefun();
         break;
     case 6:
         printf("you selected %d -> top students: ", p);
