@@ -809,7 +809,7 @@ void top_ten_students(){
 
 
 if(head != NULL){
-    int max,i,j,sum=0;
+    int max,i,j,k,sum=0;
     int max_ten[10] = {0};
 
     studl *temp=head;
@@ -853,11 +853,18 @@ if(head != NULL){
     temp = head;
 
     i=0;
+       printf("\t%c",201);
+         for(k=0;k<42;k++)
+         printf("%c",205);
+         printf("%c\n",187);
     while( max_ten[i]!=-1 && i<10 ){
         while( temp != NULL){
 
+
             if(temp->totalmark == max_ten[i]){
-                printf("\t[%d] %s with [%d] degrees\n",num, temp->name ,temp->totalmark);
+                    printf("\t%c",186);
+                printf("[%-2d] %-18s with [%-3d] degrees",num, temp->name ,temp->totalmark);
+             printf("%c\n",186);
                 i++;
                 num++;
                 break; }
@@ -866,6 +873,11 @@ if(head != NULL){
         }
         temp = head;
     }
+         printf("\t%c",200);
+        for(k=0;k<42;k++)
+        printf("%c",205);
+        printf("%c\n",188);
+
 }else{
     printf("There are no students\n");
 }
