@@ -9,21 +9,7 @@ struct sub{
  int mark;
  };
 
- typedef struct infostudent{
- char name [50];
- char currentyear[15];
- int section;
- int code;
- long long int national_id;
- char email[30];
- char Birthday[30];
- struct sub *subjects[4];
-int totalmark;
-
- }stud;
-
-
- typedef struct list_infostudent{
+typedef struct list_infostudent{
 
     char name [50];
     long long int national_id;
@@ -63,7 +49,6 @@ void top_ten_students();
 void main(){
 int vs, p=1;
 char c;
-stud s;
 studl sl;
 start();
 hidecursor();
@@ -134,14 +119,12 @@ vs=5;
         vs+=5;
         gotoxy(21, vs);
         printf("6->top students  ");
-        //top_ten_students();
         break;
     case 7:
         SetConsoleTextAttribute ( curs, 240 );
         vs+=6;
         gotoxy(21, vs);
         printf("7->edit          ");
-        //edit();
         break;
     case 8:
         SetConsoleTextAttribute ( curs, 240 );
@@ -425,10 +408,10 @@ void start()
         fread(&temp->subjects[3]->mark,sizeof(temp->subjects[3]->mark),1,pfile1);
 
         if(head == NULL){head = temp; cur=temp;}
-
+        else{
         cur->nextptr=temp;
         cur=cur->nextptr;
-
+        }
         }
     cur->nextptr = NULL ;
     fclose(pfile1);
